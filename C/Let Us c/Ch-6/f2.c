@@ -37,7 +37,7 @@ void binary_rec(int n, int *p)
 }
 int main()
 {
-    int n = 128;
+    int n = 64;
     int a[100];
     int count = binary(n, a);
     // print_array(a, count);
@@ -47,6 +47,13 @@ int main()
     }
     
     binary_rec(n,a);
+    
+    for (int i = 0; i < count/2; i++)
+    {
+        int temp = a[i];
+        a[i] = a[count - i - 1];
+        a[count - i - 1] = temp;
+    }
     print_array(a, count);
     return 0;
 }
