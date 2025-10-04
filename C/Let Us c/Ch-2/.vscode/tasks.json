@@ -1,0 +1,52 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Prepare Output Folder",
+            "type": "shell",
+            "command": "mkdir",
+            "args": [
+                "-p",
+                "${fileDirname}/output"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Build C Program",
+            "type": "shell",
+            "command": "gcc",
+            "args": [
+                "-Wall",
+                "-Wextra",
+                "-g3",
+                "${file}",
+                "-o",
+                "${fileDirname}/output/j"
+            ],
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "Run C Executable",
+            "type": "shell",
+            "command": "${fileDirname}/output/j",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Build and Run C Program",
+            "dependsOn": [
+                "Prepare Output Folder",
+                "Build C Program",
+                "Run C Executable"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
