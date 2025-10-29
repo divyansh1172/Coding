@@ -147,8 +147,7 @@ void sort_svd(int n, double *S, double **V)
     }
 }
 
-// computing U=1/(simga[i])*A*v_i
-//
+// computing U=(1/simga[i])*A*v_i
 void compute_U(int m, int n, double **a, double **U, double *S, double **V)
 {
     for (int i = 0; i < m; i++)
@@ -183,6 +182,35 @@ void print_matrix(int m, int n, double **a)
         printf("\n");
     }
     return;
+}
+
+// reconstructing A_k matrix for different values of k
+void reconstruct_matrix(int m, int n, int k, double U[m][n], double S[n],
+                        double V[n][n], double A_reconstructed[m][n])
+{
+    // Initialize result to zero
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            A_reconstructed[i][j] = 0.0;
+        }
+    }
+
+    // Use only the top k singular values
+    int rank = (k < n) ? k : n;
+
+    // A = sum from i=0 to k-1 of: sigma_i * u_i * v_i^T
+    for (int i = 0; i < rank; i++)
+    {
+        for (int row = 0; row < m; row++)
+        {
+            for (int col = 0; col < n; col++)
+            {
+                A_reconstructed[row][col] += S[i] * U[row][i] * V[col][i];
+            }
+        }
+    }
 }
 
 int main()
