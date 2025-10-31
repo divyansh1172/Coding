@@ -227,7 +227,7 @@ int main()
     }
 
     double A_k[m][n];
-    printf("\nV matrix\n");
+    printf("\nreconstructed matrix matrix\n");
     reconstruct_matrix(m, n, 16, U, singular_vals, V, A_k);
     for (int i = 0; i < m; i++)
     {

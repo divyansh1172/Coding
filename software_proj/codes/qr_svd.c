@@ -2,6 +2,7 @@
 #include <math.h>
 #include <stdlib.h>
 
+//  this function is correct and working properly
 // allocates memory for a matrix in a heap
 double **allocate_matrix(int m, int n)
 {
@@ -14,6 +15,7 @@ double **allocate_matrix(int m, int n)
     return mat;
 }
 
+//  this function is correct and working properly
 // free a allocated matrix
 void free_matrix(double **mat)
 {
@@ -114,9 +116,17 @@ void jacobi_eigen(int n, double **a, double **V, double *singular_vals)
         }
     }
     // storing the singular vals
+    // storing the singular vals
     for (int i = 0; i < n; i++)
     {
-        singular_vals[i] = sqrt(a[i][i]);
+        if (a[i][i] < 0.0)
+        {
+            singular_vals[i] = 0.0;
+        }
+        else
+        {
+            singular_vals[i] = sqrt(a[i][i]);
+        }
     }
     return;
 }
@@ -148,6 +158,7 @@ void sort_svd(int n, double *S, double **V)
 }
 
 // computing U=(1/simga[i])*A*v_i
+// checked and working
 void compute_U(int m, int n, double **a, double **U, double *S, double **V)
 {
     for (int i = 0; i < m; i++)
@@ -185,8 +196,9 @@ void print_matrix(int m, int n, double **a)
 }
 
 // reconstructing A_k matrix for different values of k
-void reconstruct_matrix(int m, int n, int k, double U[m][n], double S[n],
-                        double V[n][n], double A_reconstructed[m][n])
+// working properly
+void reconstruct_matrix(int m, int n, int k, double **U, double *S,
+                        double **V, double **A_reconstructed)
 {
     // Initialize result to zero
     for (int i = 0; i < m; i++)
@@ -213,11 +225,8 @@ void reconstruct_matrix(int m, int n, int k, double U[m][n], double S[n],
     }
 }
 
-int main()
+void svd_reconstruct(const unsigned char *input, unsigned char *output, int m, int n, int k)
 {
-    int m, n;
-    scanf("%d %d", &m, &n);
-    // leave matric allocation for now i'll add it afterwards
     //  allocating memmory for all the matrices
     double **a = allocate_matrix(m, n);   // a matrix
     double **at = allocate_matrix(n, m);  // transpose of a
@@ -225,18 +234,44 @@ int main()
     double **V = allocate_matrix(n, n);   // eigenvector matrix
     double **U = allocate_matrix(m, n);   // left multiplaction matrix
     double *singular_vals = malloc(n * sizeof(double));
+    double **A_reconstructed = allocate_matrix(m, n);
 
+    // copying the input image into a and normlizing the values for easier calculationsss
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            a[i][j] = (double)input[i * n + j] / 255.0;
+        }
+    }
+
+    // running all the functions and doing the svd decomposittion
     transpose_mat(m, n, a, at);              // taking transpose of  a
     mult_at_a(m, n, ata, a, at);             // multiplying at and a
     jacobi_eigen(n, ata, V, singular_vals);  // computing singular values and V
     sort_svd(n, singular_vals, V);           // sorting ascending
     compute_U(m, n, a, U, singular_vals, V); // computing U from the formula SVD decomposition
+    reconstruct_matrix(m, n, k, U, singular_vals, V, A_reconstructed);
 
+    // denormalizing all the values gotten after all the calculations
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            double val = A_reconstructed[i][j] * 255.0;
+            if (val > 255.0)
+                val = 255.0;
+            if (val < 0.0)
+                val = 0.0;
+            output[i * n + j] = (unsigned char)val;
+        }
+    }
+
+    // freeing the allocated memory
     free_matrix(a);
     free_matrix(at);
     free_matrix(ata);
     free_matrix(V);
     free_matrix(U);
     free(singular_vals);
-    return 0;
 }
