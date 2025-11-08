@@ -8,4 +8,4 @@
 #define peri_squ(x) (4 * (x))
 
 #define area_circ(r) (PI * (r) * (r))
-#define peri_circ(r) (2 * PI * (r))
+#define peri_circ(r) (2 * PI * (r)) 

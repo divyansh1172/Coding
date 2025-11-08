@@ -1,4 +1,4 @@
-#include<stdio.h>
+#include <stdio.h>
 
 // int check_if_symmetric(int m, int a[m][m])
 // {
@@ -14,13 +14,13 @@
 //     }
 //     return 1;
 // }
-int check_if_symmetric(int m, int *a)
+int check_if_symmetric(int m, int **a)
 {
     for (int i = 0; i < m; i++)
     {
-        for (int j = i+1; j < m; j++)
+        for (int j = i + 1; j < m; j++)
         {
-            if (*(*(a+i)+j)!=*(*(a+j)+i))
+            if (*(*(a + i) + j) != *(*(a + j) + i))
             {
                 return 0;
             }
@@ -41,13 +41,14 @@ int main()
     {
         for (int j = 0; j < 6; j++)
         {
-            scanf("%d",&a[i][j]);
+            scanf("%d", &a[i][j]);
         }
     }
-    if (check_if_symmetric(6,&a[0][0]))
+    if (check_if_symmetric(6, &a[0][0]))
     {
         printf("Yes\n");
     }
-    else printf("No\n");
+    else
+        printf("No\n");
     return 0;
 }

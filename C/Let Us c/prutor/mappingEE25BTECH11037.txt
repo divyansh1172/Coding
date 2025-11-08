@@ -1,0 +1,30 @@
+SUBSTITUTION CIPHER MAPPING (A–Z)
+----------------------------------
+PLAIN     CIPHER
+----------------------------------
+A         E
+B         P
+C         N
+D         H
+E         O
+F         S
+G         M
+H         J
+I         I
+J         V
+K         K
+L         T
+M         X
+N         Q
+O         L
+P         F
+Q         C
+R         Z
+S         R
+T         B
+U         D
+V         Y
+W         W
+X         A
+Y         U
+Z         G
