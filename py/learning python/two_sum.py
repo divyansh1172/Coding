@@ -9,3 +9,7 @@ for x in range(0, len(nums)):
         y+=1
     x+=1
 
+seen =set()
+
+
+

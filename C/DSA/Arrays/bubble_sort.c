@@ -1,5 +1,5 @@
 // the largest element gets bubbled to the end 
-// we check for adjacent elems and if the condo is true we swap hem till we get the sorted array
+// we check for adjacent elems and if the condo is true we swap them till we get the sorted array
 // the outer loop runs for n-1 times and the inner loop runs for n-i-1 times
 // Time complexity: O(N^2)
 #include<stdio.h>
