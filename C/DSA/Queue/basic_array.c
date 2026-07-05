@@ -1,6 +1,7 @@
 // Basic Implementation of a Queue using an array
 #include<stdio.h>
 #include<stdlib.h>
+
 typedef struct Queue{
     int *q;
     int front; 
