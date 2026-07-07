@@ -41,6 +41,13 @@ void postOrderTraversal(Node *root){
     return;
 }
 
+int SumOfNodes(Node *root){
+    if(root==NULL){
+        return 0;
+    }
+    return root->val + SumOfNodes(root->left)+ SumOfNodes(root->right);
+}
+
 int main(){
     Node *root=createNode(10);
     Node *a=createNode(5);
